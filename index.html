@@ -362,6 +362,16 @@
         rightPressed = false;
         touchStartX = null;
     });
+    function restartGame() {
+    gameOver = false;
+    hearts.length = 0;
+    obstacles.length = 0;
+    motoX = canvas.width / 2 - motoWidth / 2;
+    score = 0;
+    localStorage.setItem('motoScore', score);
+    frameCount = 0;
+    gameLoop();
+    }
 
     gameLoop();
 </script>
