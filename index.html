@@ -307,6 +307,12 @@ function drawMoto() {
 
         if(gameOver) {
             drawGameOver();
+            if(gameOver) {
+    drawGameOver();
+    const music = document.getElementById('gameMusic');
+    music.pause();
+    return;
+}
             return;
         }
 
