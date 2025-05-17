@@ -198,16 +198,13 @@
     let gameOver = false;
     let frameCount = 0;
 
-    function drawMoto() {
-        ctx.fillStyle = '#d63384';
-        ctx.fillRect(motoX, motoY, motoWidth, motoHeight);
-        // Колёса
-        ctx.fillStyle = '#555';
-        ctx.beginPath();
-        ctx.arc(motoX + 10, motoY + motoHeight, 10, 0, Math.PI * 2);
-        ctx.arc(motoX + motoWidth - 10, motoY + motoHeight, 10, 0, Math.PI * 2);
-        ctx.fill();
-    }
+    
+    const motoImg = new Image();
+motoImg.src = 'images/cat.jng'; 
+
+function drawMoto() {
+    ctx.drawImage(motoImg, motoX, motoY, motoWidth, motoHeight);
+}
 
     function createHeart() {
         const x = Math.random() * (canvas.width - 30) + 15;
