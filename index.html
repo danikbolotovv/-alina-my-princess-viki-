@@ -97,7 +97,72 @@
         <div class="footer">
             Эта страница является фанатской и создана исключительно из любви.  
             <br>Автор — человек, который считает Алину чудом и смыслом жизни.
-        </div>
+        </div> 
+        <hr>
+<h2 style="text-align: center;">Любовный кликер для Алины</h2>
+<div style="text-align: center; position: relative;">
+    <p>Сколько раз ты признался в любви Алине:</p>
+    <h1 id="counter" style="font-size: 3em; color: #d63384;">0</h1>
+    <button onclick="clickLove()" style="padding: 10px 20px; font-size: 1.2em; background-color: #ffc0cb; border: none; border-radius: 10px; cursor: pointer;">
+        Признаться в любви
+    </button>
+    <p id="message" style="margin-top: 1em; font-style: italic;"></p>
+</div>
+
+<audio id="loveSound" src="https://www.soundjay.com/button/sounds/button-09.mp3" preload="auto"></audio>
+
+<style>
+    .heart {
+        position: absolute;
+        color: #ff69b4;
+        font-size: 2em;
+        animation: floatUp 1s ease-out forwards;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-100px); }
+    }
+</style>
+
+<script>
+    let count = 0;
+    const messages = [
+        "Ты лучший парень на свете!",
+        "Алина улыбается прямо сейчас!",
+        "Любовь растёт с каждым кликом!",
+        "Булочка почувствовала твою любовь!",
+        "Сердце Алины бьётся быстрее!",
+        "Каждое нажатие — это счастье!"
+    ];
+
+    function clickLove() {
+        count++;
+        document.getElementById("counter").innerText = count;
+
+        // звук
+        document.getElementById("loveSound").play();
+
+        // сообщение
+        if (count % 5 === 0) {
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("message").innerText = msg;
+        } else {
+            document.getElementById("message").innerText = "";
+        }
+
+        // анимация сердечка
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        const clickerDiv = document.querySelector("div[style*='text-align: center']");
+        heart.style.left = Math.random() * 80 + 10 + "%";
+        heart.style.top = "50%";
+        clickerDiv.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+    }
+</script>
     </div>
 </body>
 </html>
