@@ -381,7 +381,20 @@ function drawMoto() {
     window.addEventListener("keydown", startMusic);
     window.addEventListener("click", startMusic);
 };
-};  
+}; 
+    <script>
+function startGame() {
+    document.getElementById('startScreen').style.display = 'none';
+    const music = document.getElementById('bgMusic');
+    music.play().catch(err => {
+        console.log("Нужно кликнуть, чтобы музыка запустилась.");
+    });
+    gameLoop();
+}
+</script>
+<script>
+  // здесь остальной твой JS код игры
+</script>
 </script>  </div> 
     <audio id="bgMusic" src="thelookoflove.m4a" loop preload="auto"></audio>
 
