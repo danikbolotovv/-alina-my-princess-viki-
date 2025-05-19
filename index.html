@@ -370,7 +370,80 @@ function drawMoto() {
     motoImg.onload = () => {  
     gameLoop();  
 };  
-</script>  </div>
+</script>  </div> 
+    <hr>
+<h2 style="text-align: center; margin-top: 40px; color: #c62828;">Мини-игра: Сражение за сердце Алины</h2>
+<div style="display: flex; justify-content: center; margin: 20px 0;">
+  <canvas id="fightCanvas" width="500" height="200" style="border: 2px solid #c62828; background-color: #fff3f3; border-radius: 10px;"></canvas>
+</div>
+
+<script>
+const canvasFight = document.getElementById("fightCanvas");
+const ctxFight = canvasFight.getContext("2d");
+
+const player = { x: 50, y: 120, width: 30, height: 60, color: "#2196f3", health: 100, attacking: false };
+const enemy = { x: 420, y: 120, width: 30, height: 60, color: "#e53935", health: 100, attacking: false };
+
+function drawFighter(f) {
+  ctxFight.fillStyle = f.color;
+  ctxFight.fillRect(f.x, f.y, f.width, f.height);
+  if (f.attacking) {
+    ctxFight.fillStyle = "#000";
+    ctxFight.fillRect(f.x + (f === player ? f.width : -10), f.y + 20, 10, 10);
+  }
+}
+
+function drawHealthBars() {
+  ctxFight.fillStyle = "#ccc";
+  ctxFight.fillRect(10, 10, 100, 10);
+  ctxFight.fillRect(390, 10, 100, 10);
+  ctxFight.fillStyle = "#2196f3";
+  ctxFight.fillRect(10, 10, player.health, 10);
+  ctxFight.fillStyle = "#e53935";
+  ctxFight.fillRect(490 - enemy.health, 10, enemy.health, 10);
+}
+
+function checkHit(attacker, target) {
+  if (attacker.attacking &&
+      attacker.x < target.x + target.width &&
+      attacker.x + attacker.width > target.x) {
+    target.health -= 10;
+    attacker.attacking = false;
+  }
+}
+
+function updateEnemy() {
+  if (Math.random() < 0.02) enemy.attacking = true;
+  if (enemy.x > player.x + 40) enemy.x -= 1;
+  else if (enemy.x < player.x + 20) enemy.x += 1;
+}
+
+function drawFightScene() {
+  ctxFight.clearRect(0, 0, canvasFight.width, canvasFight.height);
+  drawHealthBars();
+  drawFighter(player);
+  drawFighter(enemy);
+  if (player.health <= 0 || enemy.health <= 0) {
+    ctxFight.fillStyle = "#000";
+    ctxFight.font = "20px serif";
+    ctxFight.textAlign = "center";
+    ctxFight.fillText(player.health <= 0 ? "Ты проиграл, но Алина всё равно тебя любит!" : "Победа! Алина в восторге!", canvasFight.width / 2, 100);
+    return;
+  }
+  updateEnemy();
+  checkHit(player, enemy);
+  checkHit(enemy, player);
+  requestAnimationFrame(drawFightScene);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "a" || e.key === "A") player.x = Math.max(0, player.x - 5);
+  if (e.key === "d" || e.key === "D") player.x = Math.min(canvasFight.width - player.width, player.x + 5);
+  if (e.key === "s" || e.key === "S") player.attacking = true;
+});
+
+drawFightScene();
+</script>
 
 </body>  
 </html>
